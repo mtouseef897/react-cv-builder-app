@@ -9,6 +9,7 @@ import { fadeInOut, slideUpDownMenu } from "../animation";
 import { auth } from "../config/firebase.config";
 import { useQueryClient } from "@tanstack/react-query";
 import { adminid } from "../utils/helpers";
+import useFilters from "../hooks/useFilters";
 const Header = () => {
   const { data, isLoading, isError } = useUser();
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -19,6 +20,22 @@ const Header = () => {
       queryClient.setQueryData(["user"], null);
     });
   };
+
+const {data:filterData}=useFilters();
+
+
+const handleSearchFilter=(e)=>{
+  queryClient.setQueryData(["globalFilters"],{...queryClient.getQueryData(["globalFilters"]),searchTerm:e.target.value});
+}
+
+
+const clearFilters=()=>{
+  queryClient.setQueryData(["globalFilters"],{...queryClient.getQueryData(["globalFilters"]),searchTerm:""});
+
+}
+
+
+
   return (
     <header className="w-full flex items-center justify-between px-4 py-3 lg:px-8 border-b border-gray-300 bg-bgPrimary z-50 gap-12 sticky top-0 ">
       {/* logo */}
@@ -31,10 +48,18 @@ const Header = () => {
 
       <div className="flex-1 border border-gray-300 rounded-md flex items-center justify-between bg-gray-200 px-4 py-1">
         <input
+          value={filterData?.searchTerm?filterData.searchTerm:""}
+          onChange={handleSearchFilter}
           className=" outline-none flex-1 h-10 bg-transparent text-base font-semibold border-none"
           type="text"
           placeholder="Search in here..."
         />
+
+        <AnimatePresence>
+       {filterData?.searchTerm.length>0 &&   <motion.div {...fadeInOut} onClick={clearFilters} className=" cursor-pointer w-8 h-8 flex items-center justify-center bg-gray-300 rounded-md active:scale-95">
+            <p className="text-xl text-black">X</p>
+          </motion.div>}
+        </AnimatePresence>
       </div>
 
       {/* profile */}

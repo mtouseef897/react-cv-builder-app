@@ -123,8 +123,9 @@ const CreateTemplate = () => {
       imageURL: imageAsset.uri,
       name:
         templates && templates.length > 0
-          ? `Template ${templates.length + 1}`
-          : "Template 1",
+          ? `Template${templates.length + 1}`
+          : "Template1",
+      tags:selectedTags,
       timestamp: timestamp,
     };
 
@@ -167,7 +168,7 @@ const CreateTemplate = () => {
   return (
     <div className="w-full px-4 lg:px-10 2xl:px-32 py-4 grid grid-cols-1 lg:grid-cols-12 h-full gap-4">
       {/* left container */}
-      <div className=" col-span-12 lg:col-span-4 2xl:col-span-3  flex-1 flex flex-col items-center justify-start gap-4 px-2">
+      <div className=" col-span-12 lg:col-span-4 2xl:col-span-3  flex-1 flex flex-col items-center justify-start gap-4 px-2 ">
         {/* section title */}
         <div className="w-full">
           <p className=" text-lg text-txtPrimary">Create New Template</p>
@@ -180,8 +181,8 @@ const CreateTemplate = () => {
           </p>
           <p className=" text-sm font-bold text-txtDark capitalize">
             {templates && templates.length > 0
-              ? `template ${templates.length + 1}`
-              : "template 1"}
+              ? `template${templates.length + 1}`
+              : "template1"}
           </p>
         </div>
 
@@ -280,9 +281,9 @@ const CreateTemplate = () => {
         ) : (
           <>
             {templates && templates.length > 0 ? (
-              <div className="grid w-full grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4 ">
+              <div className="grid w-full grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
                 {templates.map((template) => (
-                  <div className="relative border border-red-600 w-full " key={template._id}>
+                  <div className="relative rounded-md overflow-hidden w-full " key={template._id}>
                     <img
                       src={`${template.imageURL}`}
                       className=" w-full h-full object-cover"
